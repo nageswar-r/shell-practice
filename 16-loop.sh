@@ -11,17 +11,17 @@ fi
 VALIDATE(){
 
     if [ $1 -ne 0 ]; then
-        echo " $2 .. failed" | tee -a $LOGS_FILE
+        echo "$2 .. failed" | tee -a $LOGS_FILE
         exit 1
     else
-        echo " $2 .. success" | tee -a $LOGS_FILE
+        echo "$2 .. success" | tee -a $LOGS_FILE
 }
 
 for package in $@
 do 
     dnf list installed $package &>> $LOGS_FILE
     if [ $? -ne 0 ]; then
-        echo " $package is not installed, installing now"
+        echo "$package is not installed, installing now"
         dnf install $package -y &>> $LOGS_FILE
         VALIDATE $? "$package installation"
     else 
