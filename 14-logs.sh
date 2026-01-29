@@ -10,7 +10,7 @@ if [ $USERID -ne 0 ]; then
 fi
 
 VALIDATE(){
-    if [ $1 -ne 0 ]
+    if [ $1 -ne 0 ]; then
         echo "$2 .. Failure" | tee -a $LOGS_FILE
         exit 1
     else
