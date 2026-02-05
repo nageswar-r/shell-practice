@@ -32,7 +32,7 @@ exit 1
 fi
 
 if [ ! -d "$DESTINATION_DIR" ]; then
-log "Destination directory: $DESTINATION_DIR" does not exist"
+log "Destination directory: "$DESTINATION_DIR" does not exist"
 exit 1
 fi
 
@@ -44,27 +44,25 @@ log "Destination Directory: $DESTINATION_DIR"
 log "Days: $DAYS"
 
 if [ -z "${FILES}" ]; then
+    log "No files to archive .. skipping"
+        else 
+                log "Files to archive:$FILES"
+                TIMESTAMP=$(date +%F-%H-%M-%S)
+                ZIP_FILE_NAME="$DESTINATION_DIR/app-logs-$TIMESTAMP.tar.gz"
+                tar -zcvf -$ZIP_FILE_NAME $FILES
 
-log "No files to archive .. skipping"
+                if [ -z $ZIP_FILE_NAME ]; then
+                    log "Archeival is success"
 
-else 
-log "Files to archive:$FILES"
-TIMESTAMP=$(date +%F-%H-%M-%S)
-ZIP_FILE_NAME="$DESTINATION_DIR/app-logs-$TIMESTAMP.tar.gz"
-tar -zcvf -$ZIP_FILE_NAME $FILES
+                    while IFS= read -r filepath; do
+                    log "Deleting file:$filepath"
+                    rm -f $filepath
+                    log "Deleted file:$filepath"
+                    done <<< $FILES
 
-if [ -z $ZIP_FILE_NAME ]; then
-log "Archeival is success"
-
-while IFS= read -r filepath; do
-log "Deleting file:$filepath"
-rm -f $filepath
-log "Deleted file:$filepath"
-done <<< $FILES
-
-else
-log "Archeival is Failure"
-exit 1
-fi
+                else
+                log "Archeival is Failure"
+                exit 1
+                fi
 
 fi
