@@ -49,7 +49,7 @@ if [ -z "${FILES}" ]; then
                 log "Files to archive:$FILES"
                 TIMESTAMP=$(date +%F-%H-%M-%S)
                 ZIP_FILE_NAME="$DESTINATION_DIR/app-logs-$TIMESTAMP.tar.gz"
-                tar -zcvf -$ZIP_FILE_NAME $FILES
+                tar -zcvf "$ZIP_FILE_NAME" $FILES
 
                 if [ -z $ZIP_FILE_NAME ]; then
                     log "Archeival is success"
