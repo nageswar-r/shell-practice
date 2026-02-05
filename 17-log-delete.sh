@@ -13,7 +13,7 @@ FILES_TO_DELETE=$(find $LOGS_DIR -name "*.log" -type f -mtime +14)
 
 echo "$FILES_TO_DELETE"
 
-if [ -z $FILES_TO_DELETE ]; then
+if [ -z "$FILES_TO_DELETE" ]; then
 
 echo "No files older than 14 days to delete"
 
