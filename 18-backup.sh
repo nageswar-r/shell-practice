@@ -43,7 +43,7 @@ log "Source Directory: $SOURCE_DIR"
 log "Destination Directory: $DESTINATION_DIR"
 log "Days: $DAYS"
 
-if [ -z "${FILES} ]; then
+if [ -z "${FILES}" ]; then
 
 log "No files to archive .. skipping"
 
