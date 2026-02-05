@@ -10,7 +10,7 @@ DAYS=${3:-14} # 14 days is the default value, if the user not supplied
 mkdir -p $LOGS_FOLDER
 
 log(){
-    echo "$data"+%Y-%M-%D %H:%M:%S" | $1" | tee -a $LOGS_FILE
+    echo "$(date "+%Y-%M-%D %H:%M:%S") | $1" | tee -a $LOGS_FILE
 }
 
 if [ $USER_ID -ne 0 ]; then
