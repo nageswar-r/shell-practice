@@ -51,20 +51,32 @@ if [ -z "${FILES}" ]; then
                 ZIP_FILE_NAME="$DESTINATION_DIR/app-logs-$TIMESTAMP.tar.gz"
                 log "Archieve name: $ZIP_FILE_NAME"
                 #tar -zcvf $ZIP_FILE_NAME $(find $SOURCE_DIR -name "*.log" -type f -mtime +$DAYS)
-                find "$SOURCE_DIR" -name "*.log" -type f -mtime +$DAYS -print0 | tar --null -zcvf "$ZIP_FILE_NAME" --files-from=-
+                #find "$SOURCE_DIR" -name "*.log" -type f -mtime +$DAYS -print0 | tar --null -zcvf "$ZIP_FILE_NAME" --files-from=-
+tar -zcvf "$ZIP_FILE_NAME" $FILES
+if [ $? -eq 0 ]; then
+    log "Archival is success"
+    while IFS= read -r filepath; do
+        log "Deleting file: $filepath"
+        rm -f "$filepath"
+        log "Deleted file: $filepath"
+    done <<< "$FILES"
+else
+    log "Archival is Failure"
+    exit 1
+fi
 
-                if [ -z $ZIP_FILE_NAME ]; then
-                    log "Archeival is success"
+                # if [ -z $ZIP_FILE_NAME ]; then
+                #     log "Archeival is success"
 
-                    while IFS= read -r filepath; do
-                    log "Deleting file:$filepath"
-                    rm -f $filepath
-                    log "Deleted file:$filepath"
-                    done <<< $FILES
+                #     while IFS= read -r filepath; do
+                #     log "Deleting file:$filepath"
+                #     rm -f $filepath
+                #     log "Deleted file:$filepath"
+                #     done <<< $FILES
 
-                else
-                log "Archeival is Failure"
-                exit 1
-                fi
+                # else
+                # log "Archeival is Failure"
+                # exit 1
+                # fi
 
 fi
